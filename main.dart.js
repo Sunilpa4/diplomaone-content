@@ -52137,21 +52137,23 @@ case"exam":l=f.nu("exam_questions")
 g=A.c([new A.h9(A.b_("examhead"),j,j,j,j)],t.xv)
 for(r=l.a,q=J.b8(r),p=0;p<q.gC(r);++p)g.push(new A.h9(j,"x"+p,j,new A.aG2(p,l),j))
 return g}return A.c([],t.xv)},
-aq6(a1){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b=null,a="weightage",a0=a1.b
-if(typeof a0.i(0,"intro")=="string")s=A.aW(a0.i(0,"intro"))
-else if(a0.i(0,"programs")!=null){r=A.bZ(a1.a.i(0,"code_lang"))==="python"?"intro_py":"intro_c"
+aq6(a2){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b=null,a="weightage",a0="intro_text",a1=a2.b
+if(typeof a1.i(0,"intro")=="string")s=A.aW(a1.i(0,"intro"))
+else if(a1.i(0,"programs")!=null){r=A.bZ(a2.a.i(0,"code_lang"))==="python"?"intro_py":"intro_c"
 s=r}else s="intro_d"
 r=A.cL(14)
-q=A.c([A.b9x(A.cY(b,A.cX(A.c([A.aT(A.bW(a0.i(0,"title"),b),b,b,b,b,B.aHA,b,b),B.fx,A.aT(A.b_("unit")+" "+A.k(a0.i(0,"unit"))+" \xb7 "+A.k(a0.i(0,a))+"% "+A.b_(a)+" \xb7 "+A.k(a0.i(0,"hours"))+" "+A.b_("hours"),b,b,b,b,B.JZ,b,b),B.fx,A.aT(A.b_(s),b,b,b,b,B.JZ,b,b)],t.p),B.W,B.y,B.A,b),B.t,b,new A.c8(b,b,b,r,b,B.jQ,b,B.X),b,B.U4,B.jr,b))],t.xv)
-p=a1.nu("notes")
-for(r=p.a,o=J.b8(r),n=p.$ti.y[1],m=t.b,l=t.s,k=t.kc,j=0;j<o.gC(r);++j){i=k.a(J.dB(n.a(o.i(r,j)),"items"))
+q=A.aT(A.bW(a1.i(0,"title"),b),b,b,b,b,B.aHA,b,b)
+p=A.aT(A.b_("unit")+" "+A.k(a1.i(0,"unit"))+" \xb7 "+A.k(a1.i(0,a))+"% "+A.b_(a)+" \xb7 "+A.k(a1.i(0,"hours"))+" "+A.b_("hours"),b,b,b,b,B.JZ,b,b)
+o=A.c([A.b9x(A.cY(b,A.cX(A.c([q,B.fx,p,B.fx,A.aT(t.G.b(a1.i(0,a0))?A.bW(a1.i(0,a0),b):A.b_(s),b,b,b,b,B.JZ,b,b)],t.p),B.W,B.y,B.A,b),B.t,b,new A.c8(b,b,b,r,b,B.jQ,b,B.X),b,B.U4,B.jr,b))],t.xv)
+n=a2.nu("notes")
+for(r=n.a,q=J.b8(r),p=n.$ti.y[1],m=t.b,l=t.s,k=t.kc,j=0;j<q.gC(r);++j){i=k.a(J.dB(p.a(q.i(r,j)),"items"))
 h=J.iA(i==null?[]:i,m)
 i=A.c([],l)
 for(g=h.a,f=J.b8(g),e="n"+j+"_",d=0;d<f.gC(g);++d)i.push(e+d)
-q.push(new A.h9(A.bW(J.dB(n.a(o.i(r,j)),"title"),b),b,i,b,b))
+o.push(new A.h9(A.bW(J.dB(p.a(q.i(r,j)),"title"),b),b,i,b,b))
 for(e=h.$ti.y[1],d=0;d<f.gC(g);++d){c=e.a(f.i(g,d))
-if(c.i(0,"h")!=null)q.push(new A.h9(b,i[d],b,new A.aFR(c,a1),b))
-else q.push(new A.h9(b,i[d],b,new A.aFS(d,c,a1),b))}}return q},
+if(c.i(0,"h")!=null)o.push(new A.h9(b,i[d],b,new A.aFR(c,a2),b))
+else o.push(new A.h9(b,i[d],b,new A.aFS(d,c,a2),b))}}return o},
 Ji(a,b,c,a0){var s,r,q,p,o,n,m,l,k,j,i,h,g,f=null,e=A.c([],t.xv),d=a.nu(b)
 for(s=d.a,r=J.b8(s),q=d.$ti.y[1],p=t.b,o=t.s,n=t.kc,m=0;m<r.gC(s);++m){l=n.a(J.dB(q.a(r.i(s,m)),"items"))
 k=J.iA(l==null?[]:l,p)
