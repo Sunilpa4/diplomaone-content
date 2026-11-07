@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "subjects": {
+    "DI03000141": [
+      {
+        "session": "summer-2026",
+        "pdf": "Question_Paper.pdf"
+      }
+    ],
+    "DI03000151": [
+      {
+        "session": "summer-2026",
+        "pdf": "Question_Paper.pdf"
+      }
+    ],
+    "DI03000161": [
+      {
+        "session": "summer-2026",
+        "pdf": "Question_Paper.pdf"
+      }
+    ],
+    "DI03000171": [
+      {
+        "session": "summer-2026",
+        "pdf": "Question_Paper.pdf"
+      }
+    ],
+    "DI03000201": [
+      {
+        "session": "summer-2026",
+        "pdf": "Question_Paper.pdf"
+      }
+    ],
+    "DI03019011": [
+      {
+        "session": "summer-2026",
+        "pdf": "Question_Paper.pdf"
+      }
+    ]
+  }
+}
