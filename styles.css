@@ -283,6 +283,11 @@ html[lang="gu"] .section-heading h2{line-height:1.7;letter-spacing:0}
 .paper-payment-guide strong{font-size:13px;color:var(--purple)}
 .paper-payment-guide p{font-size:12px;line-height:1.85;color:var(--muted);margin:7px 0}
 .paper-payment-guide small{display:block;font-size:11px;line-height:1.8;color:#5c4669}
+.merchant-policy,.merchant-policy-summary{overflow-wrap:anywhere}
+.merchant-policy-text{white-space:pre-line}
+.merchant-policy-summary{margin-top:18px;font-size:12px;line-height:1.85;color:var(--muted)}
+.merchant-policy-summary p{margin:8px 0}
+.merchant-policy-summary a{text-decoration:underline;text-underline-offset:3px}
 .paper-purchase-actions{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:26px}
 .paper-purchase-actions>p{flex-basis:100%;font-size:12px;color:var(--muted);line-height:1.8}
 .paper-purchase-actions button:disabled{opacity:.6;cursor:not-allowed;transform:none}
