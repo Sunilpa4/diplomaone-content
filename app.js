@@ -63,7 +63,7 @@
   const visibleBranchKeys=Object.freeze(['computer','civil','chemical','electrical','mechanical']);
   const visibleSemesters=Object.freeze(['1','2','3','4','5']);
   const paperPrices=Object.freeze({computer:1900,mechanical:2900,electrical:2900,civil:2900,chemical:3900});
-  const isPaymentSite=()=>['https://www.diplomaone.in','https://vermillion-pothos-520a34.netlify.app'].includes(location.origin);
+  const isPaymentSite=()=>['https://diplomaonein.netlify.app','https://www.diplomaone.in','https://vermillion-pothos-520a34.netlify.app'].includes(location.origin);
   const isConnectionTestSite=()=>location.origin==='https://vermillion-pothos-520a34.netlify.app';
   const accountLabels={en:{signIn:'Sign in',account:'My account',purchases:'My purchases'},gu:{signIn:'સાઇન ઇન',account:'મારું ખાતું',purchases:'મારી ખરીદી'}};
   const tr = (key) => strings[lang][key] || strings.en[key] || key;
@@ -89,8 +89,8 @@
     return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${shapes[key] || shapes.grid}</svg>`;
   };
   const safeCode = code => /^[A-Za-z0-9_-]+$/.test(code || '');
-  const paperBase = 'https://sunilpa4.github.io/diplomaone-content/papers';
-  const paperTreeUrl = 'https://api.github.com/repos/Sunilpa4/diplomaone-content/git/trees/main?recursive=1';
+  const paperBase = '/papers';
+  const paperTreeUrl = '/papers/index.json';
   const paperCache = new Map();
   // The older GTU scheme uses seven-digit codes, distinct from DI codes.
   const legacyPaperNames = {'4351902':'Manufacturing Engineering – III','4351903':'Thermal Engineering – II','4350501':'Mass Transfer - II','4360501':'Chemical Reaction Engineering'};
@@ -518,6 +518,11 @@
       paperCache.set(key,html);
     }
     const title=lang==='gu'?'ઉકેલેલું પ્રશ્નપત્ર':'Solved question paper';
+    const hasGujarati=!!html&&[...new DOMParser().parseFromString(html,'text/html').querySelectorAll('.gu')].some(node=>node.textContent.trim());
+    const contentLanguage=lang==='gu'&&!hasGujarati?'en':lang;
+    const languageNotice=lang==='gu'&&!hasGujarati
+      ? '<p class="reader-notice">આ પેપર હાલમાં માત્ર અંગ્રેજીમાં ઉપલબ્ધ છે. નીચે અંગ્રેજી ઉકેલ બતાવ્યો છે.</p>'
+      : '';
     // For older shared PDF names, only link the file if the paper explicitly
     // names it; do not associate one exam's PDF with a different exam.
     const legacyLinked=html && entry?.legacyPdf && [...new DOMParser().parseFromString(html,'text/html').querySelectorAll('a[href]')].some(a=>/^(?:\.\/)?Question_Paper\.pdf$/i.test(a.getAttribute('href')));
@@ -530,10 +535,10 @@
     const solvedPdf=!paid&&entry?.solutionPdf?`${paperBase}/${encodeURIComponent(code)}/${encodeURIComponent(entry.solutionPdf)}`:'';
     const privateDownloads=paid?privateData.assets.filter(a=>a.mime==='application/pdf').map(a=>`<button type="button" class="paper-control" data-private-download="${esc(a.id)}" data-download-name="${esc(a.path.split('/').pop())}">${esc(a.path.endsWith('.solution.pdf')?(lang==='gu'?'વૈકલ્પિક ઉકેલ PDF':'Optional solution PDF'):(lang==='gu'?'મૂળ પ્રશ્નપત્ર (PDF)':'Original question paper (PDF)'))} ↧</button>`).join(''):'';
     const pdfNotice=lang==='gu'?'આ પેપર માટે પ્રશ્ન-જવાબ કાર્ડ હજુ તૈયાર થયા નથી. ઉપરની વૈકલ્પિક PDF લિંક્સથી મૂળ સામગ્રી વાંચી શકો છો. આ બિનસત્તાવાર અભ્યાસ ઉકેલ છે; જવાબોની સ્વતંત્ર ચકાસણી થઈ નથી. સાઇટનો ભાષા વિકલ્પ PDF નું ભાષાંતર કરતો નથી.':'Question-and-answer cards have not yet been prepared for this paper. The optional PDF links above provide the supplied material. This is an unofficial study solution; answers have not been independently verified. The site language switch does not translate PDF contents.';
-    const body=!paid&&entry?.pdfOnly?`<div class="reader-notice"><p>${esc(pdfNotice)}</p></div>`:sanitizePaper(html,lang,paid?{...privateData,private:true,code,session}:{code,session});
+    const body=!paid&&entry?.pdfOnly?`<div class="reader-notice"><p>${esc(pdfNotice)}</p></div>`:sanitizePaper(html,contentLanguage,paid?{...privateData,private:true,code,session}:{code,session});
     const count=!paid&&entry?.pdfOnly?0:new DOMParser().parseFromString(body,'text/html').querySelectorAll('details.card').length;
     const controls=count?`<div class="paper-controls"><div><strong>${count} ${lang==='gu'?'પ્રશ્ન ભાગો':count===1?'question part':'question parts'}</strong><p>${lang==='gu'?'જવાબ વાંચવા પ્રશ્ન પર ટેપ કરો. પરીક્ષાની વિકલ્પ સૂચનાઓ અનુસરો.':'Tap a question to read its answer. Follow the original exam choice instructions.'}</p></div><div class="paper-control-buttons"><button type="button" class="paper-control" data-paper-expand="true">${lang==='gu'?'બધા ખોલો':'Expand all'}</button><button type="button" class="paper-control" data-paper-expand="false">${lang==='gu'?'બધા બંધ કરો':'Collapse all'}</button></div></div>`:'';
-    return `${shell(title,`${name} · ${code} · ${paperSessionTitle(session)}`,[{label:tr('papers'),href:'#/papers'},{label:name,href:back},{label:title}])}<section class="page-content"><div class="wrap paper-wrap"><div class="paper-toolbar"><a class="button-text" href="${esc(back)}">← ${esc(tr('back'))}</a><div class="paper-downloads">${pdf?`<a class="button-text" href="${esc(pdf)}" target="_blank" rel="noopener noreferrer">${lang==='gu'?'મૂળ પ્રશ્નપત્ર (PDF)':'Original question paper (PDF)'} ↗</a>`:''}${solvedPdf?`<a class="button-text" href="${esc(solvedPdf)}" target="_blank" rel="noopener noreferrer">${lang==='gu'?'વૈકલ્પિક ઉકેલ PDF':'Optional solution PDF'} ↗</a>`:''}</div></div>${schemeNotice?`<p class="reader-notice">${esc(schemeNotice)}</p>`:''}${paid?`<div class="private-paper-status"><span>${lang==='gu'?'ખરીદેલું · માત્ર આ પેપર':'Purchased · this paper only'}</span><a href="#/purchases">${esc(accountLabels[lang].purchases)} →</a></div><div class="paper-downloads">${privateDownloads}</div><p id="private-asset-status" role="status" aria-live="polite"></p>`:''}${controls}<article class="reader-card solved-paper" ${paid?`data-private-product="${esc(code+'--'+session)}"`:''}>${body}</article></div></section>`;
+    return `${shell(title,`${name} · ${code} · ${paperSessionTitle(session)}`,[{label:tr('papers'),href:'#/papers'},{label:name,href:back},{label:title}])}<section class="page-content"><div class="wrap paper-wrap"><div class="paper-toolbar"><a class="button-text" href="${esc(back)}">← ${esc(tr('back'))}</a><div class="paper-downloads">${pdf?`<a class="button-text" href="${esc(pdf)}" target="_blank" rel="noopener noreferrer">${lang==='gu'?'મૂળ પ્રશ્નપત્ર (PDF)':'Original question paper (PDF)'} ↗</a>`:''}${solvedPdf?`<a class="button-text" href="${esc(solvedPdf)}" target="_blank" rel="noopener noreferrer">${lang==='gu'?'વૈકલ્પિક ઉકેલ PDF':'Optional solution PDF'} ↗</a>`:''}</div></div>${schemeNotice?`<p class="reader-notice">${esc(schemeNotice)}</p>`:''}${paid?`<div class="private-paper-status"><span>${lang==='gu'?'ખરીદેલું · માત્ર આ પેપર':'Purchased · this paper only'}</span><a href="#/purchases">${esc(accountLabels[lang].purchases)} →</a></div><div class="paper-downloads">${privateDownloads}</div><p id="private-asset-status" role="status" aria-live="polite"></p>`:''}${languageNotice}${controls}<article class="reader-card solved-paper" ${paid?`data-private-product="${esc(code+'--'+session)}"`:''}>${body}</article></div></section>`;
   }
   const paymentText=(en,gu)=>lang==='gu'?gu:en;
   const paymentKey=(code,session)=>`${accountState.user?.uid||'signed-out'}:${code}--${session}`;
@@ -592,7 +597,7 @@
     const schemeNotice=related?paymentText(`This is an older-scheme paper (code ${code}). The original exam identity is unchanged; the related subject’s syllabus may differ.`,`આ જૂની યોજનાનું પેપર છે (કોડ ${code}). મૂળ પરીક્ષાની ઓળખ યથાવત્ છે; સંબંધિત વિષયનો અભ્યાસક્રમ અલગ હોઈ શકે છે.`):'';
     const sessionLabel=paperSessionTitle(session),auth=accountCopy();
     let action;
-    if(!isPaymentSite())action=`<p class="reader-notice">${esc(paymentMessage('payment_site_required'))}</p><a class="button-primary" href="https://www.diplomaone.in/${esc(paymentRoute(code,session))}" rel="noreferrer">${paymentText('Open DiplomaOne','DiplomaOne ખોલો')} ↗</a>`;
+    if(!isPaymentSite())action=`<p class="reader-notice">${esc(paymentMessage('payment_site_required'))}</p><a class="button-primary" href="https://diplomaonein.netlify.app/${esc(paymentRoute(code,session))}" rel="noreferrer">${paymentText('Open DiplomaOne','DiplomaOne ખોલો')} ↗</a>`;
     else if(!signedIn)action=`<button type="button" id="paper-signin" class="google-signin-button" ${['idle','loading'].includes(accountState.status)||busy?'disabled':''}>${googleMark()}${esc(auth.google)}</button>${accountState.status==='unavailable'?`<button type="button" id="paper-auth-retry" class="paper-control">${esc(auth.retry)}</button>`:''}<p>${esc(paymentMessage('sign_in_required'))}</p>`;
     else action=`<button type="button" id="buy-paper" class="button-primary" data-checkout ${!ready||busy?'disabled':''}>${esc(view.status==='buying'?paymentText('Opening secure payment…','સુરક્ષિત ચુકવણી ખૂલી રહી છે…'):view.status==='loading'?paymentText('Checking your access…','તમારી પરવાનગી તપાસાઈ રહી છે…'):ready?paymentText(`Pay ${rupees(selected.amount)} · UPI / QR`,`${rupees(selected.amount)} ચૂકવો · UPI / QR`):paymentText('Checkout not available','ચેકઆઉટ ઉપલબ્ધ નથી'))}</button><button type="button" id="paper-access-retry" class="paper-control" ${busy?'disabled':''}>${paymentText('Check access again','પરવાનગી ફરી તપાસો')}</button>`;
     const message=view.message||(signedIn&&!busy&&!ready?(view.config?.enabled&&!termsMatch?'purchase_terms_changed':'live_checkout_disabled'):null);
