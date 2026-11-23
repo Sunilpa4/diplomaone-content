@@ -63,7 +63,7 @@
   const visibleBranchKeys=Object.freeze(['computer','civil','chemical','electrical','mechanical']);
   const visibleSemesters=Object.freeze(['1','2','3','4','5']);
   const paperPrices=Object.freeze({computer:1900,mechanical:2900,electrical:2900,civil:2900,chemical:3900});
-  const isPaymentSite=()=>['https://diplomaonein.netlify.app','https://www.diplomaone.in','https://vermillion-pothos-520a34.netlify.app'].includes(location.origin);
+  const isPaymentSite=()=>['https://diplomaonein.netlify.app','https://www.diplomaone.in'].includes(location.origin);
   const isConnectionTestSite=()=>location.origin==='https://vermillion-pothos-520a34.netlify.app';
   const accountLabels={en:{signIn:'Sign in',account:'My account',purchases:'My purchases'},gu:{signIn:'સાઇન ઇન',account:'મારું ખાતું',purchases:'મારી ખરીદી'}};
   const tr = (key) => strings[lang][key] || strings.en[key] || key;
@@ -568,7 +568,7 @@
       backend_not_configured:['Checkout is not open yet. No payment can be taken for this paper right now.','ચેકઆઉટ હજી શરૂ નથી. આ પેપર માટે અત્યારે ચુકવણી લઈ શકાતી નથી.'],
       purchase_terms_changed:['Purchase information changed or could not be verified. Reload before trying again. If you already paid, do not pay again; check My purchases.','ખરીદીની માહિતી બદલાઈ છે અથવા ચકાસી શકાઈ નથી. ફરી પ્રયાસ પહેલાં પેજ ફરી લોડ કરો. ચૂકવી દીધું હોય તો ફરી ચૂકવશો નહીં; મારી ખરીદી તપાસો.'],
       paper_unavailable:['This paper is not available for new purchases yet. Your other purchases are unchanged.','આ પેપર હજી નવી ખરીદી માટે ઉપલબ્ધ નથી. તમારી બીજી ખરીદી યથાવત્ છે.'],
-      private_paper_not_ready:['This paper’s private files are not ready. No payment was started.','આ પેપરની ખાનગી ફાઇલો તૈયાર નથી. કોઈ ચુકવણી શરૂ થઈ નથી.'],
+      private_paper_not_ready:['This paper has not been published yet. No payment was started.','આ પેપરની ફાઇલો હજી પ્રકાશિત નથી. કોઈ ચુકવણી શરૂ થઈ નથી.'],
       live_pilot_only:['Purchases are temporarily limited to an approved launch group. No payment was started.','ખરીદી હમણાં મંજૂર કરેલા શરૂઆતના જૂથ માટે જ છે. કોઈ ચુકવણી શરૂ થઈ નથી.'],
       order_limit:['Too many order attempts. Please wait before trying again.','ઓર્ડરના ઘણા પ્રયાસ થયા. ફરી પ્રયાસ પહેલાં રાહ જુઓ.'],
       order_being_created:['An order is already being prepared. Wait, then check My purchases before trying again.','ઓર્ડર તૈયાર થઈ રહ્યો છે. રાહ જોઈને ફરી પ્રયાસ પહેલાં મારી ખરીદી તપાસો.'],

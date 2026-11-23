@@ -1,10 +1,10 @@
 /* PUBLIC merchant information, shared by the website and payment server.
  * This file ships to browsers. NEVER enter API keys, tokens, private keys,
  * customer details or other secrets here.
- * The following bilingual wording is a DRAFT prepared from owner-selected
- * product settings. Keep approval='draft' until the owner reviews both
- * languages, applicable consumer/tax requirements and the final effective
- * date. Draft text must not open checkout.
+ * The following bilingual wording has been reviewed and approved by the
+ * owner for publication. The approval status is recorded in the public
+ * configuration below. Live checkout must remain disabled until all
+ * separate production, payment and content launch checks are complete.
  */
 (function(root,factory){
   const api=factory();
