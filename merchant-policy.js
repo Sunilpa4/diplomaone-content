@@ -15,9 +15,9 @@
   // BEGIN PUBLIC MERCHANT CONFIGURATION
   const configuration={
     schema:1,
-    approval:'draft',
-    revision:'draft-2026-11',
-    effectiveDate:'',
+    approval:'approved',
+    revision:'2026-11-v1',
+    effectiveDate:'2026-11-23',
     merchantName:'DiplomaOne',
     supportEmail:'sunilparmar45716@gmail.com',
     supportPhone:'',
