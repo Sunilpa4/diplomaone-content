@@ -208,7 +208,8 @@ var SKU={
 
 var FREE={'winter-2025':true,'summer-2025':true};
 var SESSLABEL={'winter-2025':'Winter 2025','summer-2025':'Summer 2025','summer-2026':'Summer 2026'};
-var COMMIT='ce65970';
+var N=NAMES; /* shorthand */
+var COMMIT='__C__';
 var GHI='https://cdn.jsdelivr.net/gh/Sunilpa4/diplomaone-content@'+COMMIT;
 /* ===== Utility ===== */
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
