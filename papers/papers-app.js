@@ -54,7 +54,7 @@ function ensureDesign(){
  #d1p .rd-b{display:flex;gap:7px;flex-wrap:wrap}
  #d1p .d1-language-switch{margin:0!important;padding:14px 18px!important;border:0!important;border-bottom:1px solid #e8edf5!important;border-radius:0!important;background:#f7f8ff!important;box-shadow:none!important}
  #d1p .rd-c{padding:clamp(12px,2vw,24px)}
- #d1p .rd-c details{margin:0 0 12px;border:1px solid #e4e9f2;border-radius:15px;background:#fff;overflow:hidden}
+ #d1p .rd-c details{display:block;min-height:0;margin:0 0 12px;padding:0;text-align:left;border:1px solid #e4e9f2;border-radius:15px;background:#fff;overflow:hidden;box-shadow:0 3px 12px rgba(15,23,42,.035)}
  #d1p .rd-c details>summary{padding:15px 18px;font-weight:750;line-height:1.5;cursor:pointer;background:#f8faff;color:#1e293b}
  #d1p .rd-c details[open]>summary{border-bottom:1px solid #e8edf5;background:#f2f5ff}
  #d1p .rd-c details>*:not(summary){padding-left:16px;padding-right:16px}
