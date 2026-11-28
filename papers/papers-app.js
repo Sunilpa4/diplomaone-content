@@ -206,7 +206,7 @@ var PID={
 'DI04019011':'DI04019011',
 };
 
-var COMMIT='3f5211f';
+var COMMIT='fd08cf1';
 var GHI='https://cdn.jsdelivr.net/gh/Sunilpa4/diplomaone-content@'+COMMIT;
 var FREE={'winter-2025':true,'summer-2025':true};
 var SLABEL={'winter-2025':'Winter 2025','summer-2025':'Summer 2025','summer-2026':'Summer 2026'};
