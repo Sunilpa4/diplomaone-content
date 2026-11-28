@@ -7,7 +7,7 @@ var N={"DI01000021":"Mathematics - I","DI01000031":"Communication Skills in Engl
 var F=new Set(["DI01000021","DI01000121"]);
 var P={"4350501/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=322","4350501/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=323","4351902/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=324","4351903/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=325","4360501/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=326","4360501/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=327","DI01000081/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=261","DI01000131/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=234","DI01000151/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=262","DI01000181/summer-2025":"https://diplomaone.in/checkout/?add-to-cart=263","DI01000181/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=264","DI01000181/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=265","DI01000191/summer-2025":"https://diplomaone.in/checkout/?add-to-cart=266","DI01000191/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=267","DI01000191/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=268","DI01005011/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=269","DI01005011/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=270","DI01005021/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=271","DI01005021/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=272","DI01006021/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=273","DI01006021/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=274","DI01009011/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=275","DI02000101/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=276","DI02000161/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=277","DI02000171/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=278","DI02005011/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=279","DI02005011/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=280","DI02005021/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=281","DI02005021/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=282","DI03000011/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=283","DI03000021/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=284","DI03000031/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=285","DI03000041/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=286","DI03000051/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=287","DI03000081/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=288","DI03000091/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=289","DI03000101/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=290","DI03000141/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=291","DI03000151/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=292","DI03000161/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=293","DI03000161/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=294","DI03000171/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=295","DI03000171/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=296","DI03000201/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=297","DI03000201/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=298","DI03005011/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=299","DI03005011/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=300","DI03005021/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=301","DI03005021/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=302","DI03005031/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=303","DI03005031/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=304","DI03005061/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=305","DI03005061/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=306","DI03006011/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=328","DI03006021/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=329","DI03006031/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=330","DI03006031/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=331","DI03006041/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=332","DI03006041/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=333","DI03006051/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=334","DI03006051/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=335","DI03009011/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=307","DI03009021/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=308","DI03019011/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=309","DI03019011/winter-2025":"https://diplomaone.in/checkout/?add-to-cart=310","DI04000011/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=311","DI04000021/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=312","DI04000171/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=313","DI04000241/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=314","DI04000251/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=315","DI04000321/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=316","DI04005021/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=317","DI04005041/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=318","DI04005071/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=319","DI04009011/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=320","DI04019011/summer-2026":"https://diplomaone.in/checkout/?add-to-cart=321"};
 var PR={"computer":19,"mechanical":29,"civil":29,"electrical":29,"chemical":39};
-function root(){return D.getElementById('d1p');}
+function root(){var r=D.getElementById('d1p')||D.getElementById('paper-app');if(r&&r.id!=='d1p')r.id='d1p';return r;}
 var st={b:null,s:null,c:null};
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function vw(){return root().querySelector('#vw');}
@@ -19,6 +19,55 @@ function navBtns(buttons){
 }
 function clearNav(){var old=root().querySelector('.navrow');if(old)old.remove();}
 
+function ensureDesign(){
+ if(D.getElementById('d1p-paper-design'))return;
+ var st=D.createElement('style');st.id='d1p-paper-design';
+ st.textContent=`
+ #d1p{max-width:1120px;margin:0 auto;padding:clamp(12px,2.4vw,28px);color:#172033;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+ #d1p h1{font-size:clamp(27px,4vw,38px);line-height:1.15;letter-spacing:-.035em;margin:0 0 10px;color:#111827}
+ #d1p h2{font-size:clamp(20px,3vw,26px);letter-spacing:-.025em;color:#172033;margin:26px 0 14px}
+ #d1p .lead{color:#64748b;line-height:1.65;margin:0 0 22px;max-width:760px}
+ #d1p .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px;margin:16px 0 24px}
+ #d1p .card{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:8px;min-height:112px;padding:20px;text-align:left;border:1px solid #e2e8f0;border-radius:18px;background:linear-gradient(145deg,#fff 0%,#f8faff 100%);box-shadow:0 4px 18px rgba(15,23,42,.045);color:#172033;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+ #d1p .card:hover{transform:translateY(-2px);border-color:#a5b4fc;box-shadow:0 12px 28px rgba(59,72,160,.11)}
+ #d1p .card b{font-size:16px;line-height:1.4}
+ #d1p .card small{font-size:12px;color:#64748b}
+ #d1p .tag{display:inline-flex;align-items:center;border-radius:999px;padding:5px 10px;font-size:10px;font-weight:800;letter-spacing:.08em;background:#e8f8ef;color:#137447}
+ #d1p .tag.locked{background:#fff2df;color:#a45a08}
+ #d1p .navrow{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+ #d1p .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #d8e0ee;border-radius:12px;padding:10px 15px;background:#fff;color:#26344f;font-weight:700;font-size:13px;text-decoration:none;cursor:pointer;transition:all .16s ease}
+ #d1p .btn:hover{border-color:#818cf8;background:#f5f6ff}
+ #d1p .btn.buy{border-color:#263b91;background:#263b91;color:#fff}
+ #d1p .btn.buy:hover{background:#1d2d72}
+ #d1p .sessions{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+ #d1p .ses{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px;border:1px solid #e2e8f0;border-radius:16px;background:#fff;box-shadow:0 3px 12px rgba(15,23,42,.035)}
+ #d1p .ses>b{flex:1 1 130px;font-size:14px}
+ #d1p .ses .act{flex:0 0 auto}
+ #d1p .note{font-size:12px;color:#64748b}
+ #d1p .rd{margin:24px 0 40px;border:1px solid #e2e8f0;border-radius:22px;background:#fff;box-shadow:0 14px 40px rgba(15,23,42,.07);overflow:hidden}
+ #d1p .rd-h{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:22px;background:linear-gradient(125deg,#111c45,#283b86 62%,#5868b5);color:#fff}
+ #d1p .rd-h h2{margin:6px 0;color:#fff;font-size:clamp(19px,3vw,27px)}
+ #d1p .rd-h p{margin:0;color:#dbe4ff;font-size:13px;text-transform:capitalize}
+ #d1p .rd-h .eyebrow{font-size:10px;letter-spacing:.16em;font-weight:800;color:#c7d2fe}
+ #d1p .rd-h .btn{background:#fff;border-color:#fff;color:#1e2b60}
+ #d1p .rd-t{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:13px 18px;border-bottom:1px solid #edf0f5;background:#fafbff;color:#64748b;font-size:12px}
+ #d1p .rd-b{display:flex;gap:7px;flex-wrap:wrap}
+ #d1p .d1-language-switch{margin:0!important;padding:14px 18px!important;border:0!important;border-bottom:1px solid #e8edf5!important;border-radius:0!important;background:#f7f8ff!important;box-shadow:none!important}
+ #d1p .rd-c{padding:clamp(12px,2vw,24px)}
+ #d1p .rd-c details{margin:0 0 12px;border:1px solid #e4e9f2;border-radius:15px;background:#fff;overflow:hidden}
+ #d1p .rd-c details>summary{padding:15px 18px;font-weight:750;line-height:1.5;cursor:pointer;background:#f8faff;color:#1e293b}
+ #d1p .rd-c details[open]>summary{border-bottom:1px solid #e8edf5;background:#f2f5ff}
+ #d1p .rd-c details>*:not(summary){padding-left:16px;padding-right:16px}
+ #d1p .rd-c p{line-height:1.75;color:#334155}
+ #d1p .rd-c img{max-width:100%;height:auto;border-radius:10px}
+ #d1p .rd-c table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse}
+ #d1p .rd-c th,#d1p .rd-c td{padding:8px;border:1px solid #dbe2ee}
+ #d1p .rd-c pre{max-width:100%;overflow:auto;padding:14px;border-radius:12px;background:#101827;color:#e5e7eb}
+ #d1p .err,#d1p .state,#d1p .ld{padding:16px;border-radius:14px;border:1px solid #e2e8f0;background:#f8fafc;color:#334155}
+ @media(max-width:600px){#d1p{padding:12px}#d1p .card{min-height:94px;padding:16px}#d1p .ses{align-items:flex-start}#d1p .ses .act{width:100%}#d1p .ses .act .btn{width:100%}#d1p .rd-h{padding:18px}#d1p .rd-h #bk{width:100%}#d1p .rd-b .btn{padding:8px 10px}}
+ `;
+ D.head.appendChild(st);
+}
 function renderBranches(){
  st.b=null;st.s=null;st.c=null;
  var h='<h1>Paper Solutions</h1><p class="lead">Choose your branch, semester and subject to browse free and premium solved papers. Premium papers require purchase and sign-in.</p><h2>Choose branch</h2><div class="grid">';
@@ -211,9 +260,23 @@ function renderPaper(tgt,src,url,sess,code){
  var langStatus=langBar.querySelector('#d1-lang-status');
  var paperKey=code+'/'+sess;
  var separateGujarati={
-  'DI01000081/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI01000081/summer-2026.gu.html',
+  'DI01000081/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI01000081/summer-2026.bilingual.html',
   'DI01000151/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI01000151/gujarati.html',
-  'DI01009011/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI01009011/summer-2026.gu.html'
+  'DI01009011/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI01009011/summer-2026.gu.html',
+  'DI02000161/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI02000161/summer-2026.bilingual.html',
+  'DI02000171/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI02000171/summer-2026.bilingual.html',
+  'DI03000081/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000081/summer-2026.bilingual.html',
+  'DI03000091/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000091/summer-2026.bilingual.html',
+  'DI03000101/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000101/summer-2026.bilingual.html',
+  'DI03000161/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000161/previous-summer-2026.html',
+  'DI03000171/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000171/previous-summer-2026.html',
+  'DI03000201/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000201/previous-summer-2026.html',
+  'DI03009011/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03009011/summer-2026.bilingual.html',
+  'DI03009021/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03009021/summer-2026.bilingual.html',
+  'DI03019011/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03019011/previous-summer-2026.html',
+  'DI04000171/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI04000171/summer-2026.bilingual.html',
+  'DI04000321/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI04000321/summer-2026.bilingual.html',
+  'DI04009011/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI04009011/summer-2026.bilingual.html'
  };
  var englishMarkup=h.innerHTML,gujaratiMarkup=null,gujaratiPromise=null;
  function updateLanguageButtons(lang){
@@ -246,6 +309,15 @@ function renderPaper(tgt,src,url,sess,code){
    var gd=new DOMParser().parseFromString(markup,'text/html');
    gd.querySelectorAll('script,base,style,iframe,object,embed').forEach(function(el){el.remove();});
    var gh=D.createElement('div');gh.innerHTML=gd.body.innerHTML;
+   var guNodes=gh.querySelectorAll('.gu,[lang="gu"],.gu-text,.qgu,.group-gu');
+   var enNodes=gh.querySelectorAll('.en,[lang="en"],.en-text');
+   var pureGujarati=(gd.documentElement.getAttribute('lang')||'').toLowerCase()==='gu';
+   if(guNodes.length){
+    enNodes.forEach(function(el){el.hidden=true;el.style.setProperty('display','none','important');});
+    guNodes.forEach(function(el){el.hidden=false;el.style.setProperty('display','','important');});
+   }else if(!pureGujarati){
+    throw new Error('No original Gujarati answer blocks were found');
+   }
    var gc=gh.querySelectorAll('details');
    if(!gc.length)throw new Error('Gujarati source has no question cards');
    gh.querySelectorAll('img[src]').forEach(function(img){
@@ -285,6 +357,7 @@ function renderPaper(tgt,src,url,sess,code){
   loadSeparateGujarati().then(function(markup){
    if(!markup)throw new Error('Gujarati source is unavailable');
    h.innerHTML=markup;
+   setLanguageVisibility('gu');
    var count=h.querySelectorAll('details').length;
    var countLabel=tgt.querySelector('.rd-t>span');
    if(countLabel)countLabel.textContent=count+' question cards';
@@ -297,7 +370,7 @@ function renderPaper(tgt,src,url,sess,code){
  }
  // Default language is English. Original .gu/.en blocks are now correctly recognized.
  setPaperLanguage('en');
- languageSelect.forEach(function(btn){btn.onclick=function(ev){ev.preventDefault();ev.stopPropagation();if(ev.stopImmediatePropagation)ev.stopImmediatePropagation();setPaperLanguage(btn.getAttribute('data-lang'));return false;};btn.addEventListener('pointerup',function(ev){ev.preventDefault();setPaperLanguage(btn.getAttribute('data-lang'));},{passive:false});});
+ languageSelect.forEach(function(btn){btn.onclick=function(ev){ev.preventDefault();ev.stopPropagation();if(ev.stopImmediatePropagation)ev.stopImmediatePropagation();setPaperLanguage(btn.getAttribute('data-lang'));return false;};});
  tgt.querySelector('#bk').onclick=function(){tgt.innerHTML='';var v=vw();if(v)v.scrollIntoView({behavior:'smooth',block:'start'});};
  tgt.querySelector('#exp').onclick=function(){h.querySelectorAll('details.card,details.question-card').forEach(function(e){e.open=true;});};
  tgt.querySelector('#col').onclick=function(){h.querySelectorAll('details.card,details.question-card').forEach(function(e){e.open=false;});};
@@ -341,6 +414,7 @@ function showPurchaseVerified(){
 }
 function init(){
  try{
+  ensureDesign();
   renderBranches();
   // Check for ?purchased=1 (return from checkout thank-you page)
   if(window.location.search.indexOf('purchased=1')>=0){
