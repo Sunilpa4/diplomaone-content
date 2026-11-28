@@ -100,15 +100,32 @@ function pollOwnership(code,sess,maxTries,cb){
  }
  attempt();
 }
+function refreshReaderNonce(){
+ var cfg=window.DiplomaOneAccess||{};
+ var ajax=String(cfg.ajax||'/wp-admin/admin-ajax.php');
+ if(cfg._d1NoncePromise)return cfg._d1NoncePromise;
+ cfg._d1NoncePromise=fetch(ajax+'?action=d1_reader_nonce&_='+Date.now(),{cache:'no-store',credentials:'same-origin'}).then(function(r){
+  if(r.status===401)return null;
+  if(!r.ok)throw new Error('Login check failed (HTTP '+r.status+').');
+  return r.json();
+ }).then(function(d){
+  if(!d||!d.success||!d.data||!d.data.nonce)return null;
+  cfg.nonce=d.data.nonce;return cfg.nonce;
+ }).finally(function(){cfg._d1NoncePromise=null;});
+ return cfg._d1NoncePromise;
+}
 function checkAccessServer(code,sess){
  var cfg=window.DiplomaOneAccess||{};
  var rest=String(cfg.rest||'/wp-json/diplomaone/v1/');
- var url=rest+'access?code='+encodeURIComponent(code)+'&session='+encodeURIComponent(sess);
- var hd={};if(cfg.nonce)hd['X-WP-Nonce']=cfg.nonce;
- return fetch(url,{cache:'no-store',credentials:'same-origin',headers:hd}).then(function(r){
-  if(r.status===401)return'guest';
-  if(!r.ok)throw new Error('HTTP '+r.status);
-  return r.json().then(function(d){return d.owned?'owned':'locked';});
+ return refreshReaderNonce().then(function(nonce){
+  if(!nonce)return'guest';
+  var url=rest+'access?code='+encodeURIComponent(code)+'&session='+encodeURIComponent(sess);
+  var hd={'X-WP-Nonce':nonce};
+  return fetch(url,{cache:'no-store',credentials:'same-origin',headers:hd}).then(function(r){
+   if(r.status===401)return'guest';
+   if(!r.ok)throw new Error('HTTP '+r.status);
+   return r.json().then(function(d){return d.owned?'owned':'locked';});
+  });
  });
 }
 function checkAccess(code,sess){
@@ -130,8 +147,8 @@ function openReader(code,sess,free){
    ? GH+encodeURIComponent(code)+'/'+encodeURIComponent(sess)+'.html'
    : String(cfg.rest||'/wp-json/diplomaone/v1/')+'paper/'+encodeURIComponent(code)+'/'+encodeURIComponent(sess);
   var headers={};
-  if(!free&&cfg.nonce)headers['X-WP-Nonce']=cfg.nonce;
-  fetch(url,{cache:'no-store',credentials:'same-origin',headers:headers}).then(function(r){
+  var ready=free?Promise.resolve(true):refreshReaderNonce().then(function(nonce){if(!nonce)throw new Error('Please sign in with the account used for purchase.');headers['X-WP-Nonce']=nonce;return true;});
+  ready.then(function(){return fetch(url,{cache:'no-store',credentials:'same-origin',headers:headers});}).then(function(r){
    if(!r.ok)throw new Error('Paper file not available (HTTP '+r.status+').');
    return r.text();
   }).then(function(src){renderPaper(tgt,src,url,sess,code);}).catch(function(e){tgt.innerHTML='<div class="err">'+esc(e.message||'Could not load paper.')+'</div>';});
