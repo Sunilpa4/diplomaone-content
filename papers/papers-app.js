@@ -146,7 +146,7 @@ function openReader(code,sess,free){
 function renderPaper(tgt,src,url,sess){
  // Paid REST responses can be returned as a JSON-wrapped HTML string by some
  // WordPress/proxy layers. Normalize those formats before parsing every paper.
- src=String(src==null?'':src).replace(/^\\uFEFF/,'').trim();
+ src=String(src==null?'':src).replace(/^\uFEFF/,'').trim();
  try{
   var wrapped=JSON.parse(src);
   if(typeof wrapped==='string')src=wrapped;
@@ -156,7 +156,7 @@ function renderPaper(tgt,src,url,sess){
    else if(candidate&&typeof candidate==='object'&&typeof candidate.rendered==='string')src=candidate.rendered;
   }
  }catch(ignore){}
- if(/&lt;\\/?(?:!doctype|html|head|body|details|summary|section|div)\\b/i.test(src)){
+ if(new RegExp('&lt;/?(?:!doctype|html|head|body|details|summary|section|div)\\b','i').test(src)){
   var decoder=D.createElement('textarea');decoder.innerHTML=src;src=decoder.value;
  }
  var dp=new DOMParser();var doc=dp.parseFromString(src,'text/html');
