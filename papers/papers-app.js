@@ -323,7 +323,7 @@ var PID={
 'DI04019011':'DI04019011',
 };
 
-var COMMIT='__C__';
+var COMMIT='4ecbd88';
 var GHI='https://cdn.jsdelivr.net/gh/Sunilpa4/diplomaone-content@'+COMMIT;
 /* ===== I18N ===== */
 var T={
