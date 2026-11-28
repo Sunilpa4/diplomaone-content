@@ -218,7 +218,12 @@ function app(){return $('#paper-app');}
 function vw(){var e=app();if(!e){var m=$('#main')||D.querySelector('main')||D.body;e=D.createElement('div');e.id='paper-app';m.appendChild(e);}return e;}
 function isFree(s){return !!FREE[s];}
 function pid(c,s){return PID[c]?PID[c]+'-'+s:null;}
-function curl(c,s){var p=pid(c,s);if(!p)return null;var ret=window.location.pathname+'?p=1#paper/'+c+'/'+s;return'https://diplomaone.in/checkout/?add-to-cart='+encodeURIComponent(p)+'&return='+encodeURIComponent(ret);}
+function curl(c,s){
+  var p=pid(c,s);if(!p)return null;
+  var hash='#paper/'+(R.b?R.b+'/'+R.s+'/':'')+c+'/'+s;
+  var ret=window.location.pathname+'?p=1'+hash;
+  return'https://diplomaone.in/checkout/?add-to-cart='+encodeURIComponent(p)+'&return='+encodeURIComponent(ret);
+}
 function purl(c,s){return GHI+'/papers/'+c+'/'+s+'.html';}
 function findCode(c){var bk=Object.keys(BRANCHES);for(var i=0;i<bk.length;i++){var b=BRANCHES[bk[i]];for(var s in b.s){if((b.s[s]||[]).indexOf(c)>=0)return{branch:bk[i],sem:s,name:b.n};}}return null;}
 /* Card style - rectangular cards matching site design */
@@ -258,7 +263,16 @@ function checkAccess(c,s,cb){
 function parseHash(){
   var h=window.location.hash.replace(/^#/,'');
   var p=h.split('/');
-  R={v:p[0]||'branches',b:p[1]||null,s:p[2]||null,c:p[3]||null,sess:p[4]||null};
+  var view=p[0]||'branches';
+  R={v:view,b:null,s:null,c:null,sess:null};
+  if(view==='branch'){R.b=p[1]||null;}
+  else if(view==='sem'){R.b=p[1]||null;R.s=p[2]||null;}
+  else if(view==='subj'){R.b=p[1]||null;R.s=p[2]||null;R.c=p[3]||null;}
+  else if(view==='paper'){
+    /* paper URL can be #paper/CODE/SESS (direct) or #paper/BR/SEM/CODE/SESS (from nav) */
+    if(p.length>=5){R.b=p[1];R.s=p[2];R.c=p[3];R.sess=p[4];}
+    else{R.c=p[1]||null;R.sess=p[2]||null;}
+  }
 }
 function go(hash){window.location.hash=hash;}
 /* ===== Views ===== */
@@ -319,7 +333,7 @@ function viewSessPg(){
     '<div style="margin-top:16px;">';
   for(var i=0;i<ss.length;i++){
     var s=ss[i];
-    h+=card('#paper/'+c+'/'+s,SLABEL[s]||s,'','Read →');
+    h+=card('#paper/'+R.b+'/'+R.s+'/'+c+'/'+s,SLABEL[s]||s,'','Read →');
   }
   h+='</div>';
   v.innerHTML=h;
@@ -383,10 +397,9 @@ function showPaywall(c,s,back,nm){
 function pollPay(){
   var sp=new URLSearchParams(window.location.search);
   if(sp.get('p')!=='1')return;
-  var h=window.location.hash.replace(/^#/,'');
-  var p=h.split('/');
-  if(p[0]==='paper'&&p[1]&&p[2]){
-    var c=p[1],s=p[2],p_=pid(c,s);
+  parseHash();
+  if(R.v==='paper'&&R.c&&R.sess){
+    var c=R.c,s=R.sess,p_=pid(c,s);
     if(p_)setOK(p_);
     var t=0;
     function chk(){checkAccess(c,s,function(ok){if(ok){render();}else if(t++<40)setTimeout(chk,1500);});}
