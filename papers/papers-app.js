@@ -402,7 +402,7 @@ function checkPendingAfterInit(){
     var br=B[bi];
     var found=false;
     Object.keys(br.s).forEach(function(sem){if(br.s[sem].indexOf(p.code)>=0)found=sem;});
-    if(found){st.b=br;st.s=found;st.c=p.code;renderSessions(p.code);break;}
+    if(found){st.b=br;st.s=found;st.c=p.code;renderSessions(p.code);setTimeout(function(){openReader(p.code,p.sess,false);},250);break;}
    }
   }
  });
