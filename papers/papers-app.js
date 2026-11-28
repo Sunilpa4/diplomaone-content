@@ -181,6 +181,34 @@ function renderPaper(tgt,src,url,sess){
  if(!cards.length){tgt.innerHTML='<div class="err">This paper source has no readable question cards. The source file needs repair; please try again later.</div>';return;}
  tgt.innerHTML='<div class="rd"><div class="rd-h"><div><div class="eyebrow">DIPLOMA ONE · ONLINE SOLUTION</div><h2>'+esc(title)+'</h2><p>'+esc(meta)+'</p></div><button class="btn" id="bk">← Back to papers</button></div><div class="rd-t"><span>'+cards.length+' question cards</span><div class="rd-b"><button class="btn" id="exp">Expand all</button><button class="btn" id="col">Collapse all</button></div></div><div class="rd-c"></div></div>';
  tgt.querySelector('.rd-c').appendChild(h);
+ // Add a reader-wide English/Gujarati switch. Google Translate provides a
+ // Gujarati fallback for every published paper, including older English-only files.
+ var langBar=D.createElement('div');
+ langBar.className='d1-language-switch';
+ langBar.style.cssText='display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 14px;margin:12px 0;border:1px solid #d9e2ec;border-radius:12px;background:#f8fafc;';
+ langBar.innerHTML='<label for="d1-reader-language" style="font-weight:700">Language / ભાષા</label><select id="d1-reader-language" style="padding:8px 12px;border:1px solid #b8c4d1;border-radius:8px;background:#fff"><option value="en">English</option><option value="gu">ગુજરાતી</option></select><span style="font-size:12px;color:#64748b">Gujarati is automatically translated where a reviewed Gujarati version is not available.</span><span id="d1-gt-host" style="display:none"></span>';
+ var rdHead=tgt.querySelector('.rd-h');
+ if(rdHead)rdHead.insertAdjacentElement('afterend',langBar);else tgt.querySelector('.rd').insertBefore(langBar,tgt.querySelector('.rd-c'));
+ function setReaderLanguage(code){
+  var combo=D.querySelector('.goog-te-combo');
+  if(!combo)return;
+  combo.value=code==='gu'?'gu':'';
+  combo.dispatchEvent(new Event('change',{bubbles:true}));
+ }
+ var languageSelect=langBar.querySelector('#d1-reader-language');
+ languageSelect.addEventListener('change',function(){setReaderLanguage(this.value);});
+ window.googleTranslateElementInit=function(){
+  try{
+   new window.google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'en,gu',autoDisplay:false,layout:window.google.translate.TranslateElement.InlineLayout.SIMPLE},'d1-gt-host');
+   setTimeout(function(){setReaderLanguage(languageSelect.value);},500);
+  }catch(e){}
+ };
+ if(!D.getElementById('d1-google-translate-script')){
+  var gt=D.createElement('script');gt.id='d1-google-translate-script';gt.src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';gt.async=true;D.head.appendChild(gt);
+ }else if(window.google&&window.google.translate){
+  window.googleTranslateElementInit();
+ }
+
  tgt.querySelector('#bk').onclick=function(){tgt.innerHTML='';var v=vw();if(v)v.scrollIntoView({behavior:'smooth',block:'start'});};
  tgt.querySelector('#exp').onclick=function(){h.querySelectorAll('details.card,details.question-card').forEach(function(e){e.open=true;});};
  tgt.querySelector('#col').onclick=function(){h.querySelectorAll('details.card,details.question-card').forEach(function(e){e.open=false;});};
