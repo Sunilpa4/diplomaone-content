@@ -146,12 +146,15 @@ function openReader(code,sess,free){
 function renderPaper(tgt,src,url,sess){
  var dp=new DOMParser();var doc=dp.parseFromString(src,'text/html');
  doc.querySelectorAll('script,base,style').forEach(function(e){e.remove();});
- var tEl=doc.querySelector('.hero h1,.paper-summary h3,h1');var title=tEl?tEl.textContent.trim():'Solved paper';
- var mEl=doc.querySelector('.meta,.paper-meta');var meta=mEl?mEl.textContent.replace(/\s+/g,' ').trim():sess.replace('-',' ');
+ var tEl=doc.querySelector('.hero h1,.paper-summary h3,h1');var title=tEl?tEl.textContent.trim():(doc.querySelector('title')?.textContent.trim()||'Solved paper');
+ var mEl=doc.querySelector('.meta,.paper-meta,.paper-summary .paper-kicker');var meta=mEl?mEl.textContent.replace(/\s+/g,' ').trim():sess.replace(/-/g,' ');
  var h=D.createElement('div');h.innerHTML=doc.body.innerHTML;
  h.querySelectorAll('img[src]').forEach(function(img){var s=img.getAttribute('src');if(s&&!/^(https?:|data:|blob:|#)/i.test(s))img.src=new URL(s,url).href;});
  h.querySelectorAll('a[href]').forEach(function(a){var hr=a.getAttribute('href');if(hr&&!/^(https?:|mailto:|tel:|#)/i.test(hr))a.href=new URL(hr,url).href;});
  var cards=h.querySelectorAll('details.card,details.question-card');
+ if(!cards.length)cards=h.querySelectorAll('details');
+ if(!cards.length)cards=h.querySelectorAll('[class~="question-card"]');
+ if(!cards.length){tgt.innerHTML='<div class="err">This paper source has no readable question cards. The source file needs repair; please try again later.</div>';return;}
  tgt.innerHTML='<div class="rd"><div class="rd-h"><div><div class="eyebrow">DIPLOMA ONE · ONLINE SOLUTION</div><h2>'+esc(title)+'</h2><p>'+esc(meta)+'</p></div><button class="btn" id="bk">← Back to papers</button></div><div class="rd-t"><span>'+cards.length+' question cards</span><div class="rd-b"><button class="btn" id="exp">Expand all</button><button class="btn" id="col">Collapse all</button></div></div><div class="rd-c"></div></div>';
  tgt.querySelector('.rd-c').appendChild(h);
  tgt.querySelector('#bk').onclick=function(){tgt.innerHTML='';var v=vw();if(v)v.scrollIntoView({behavior:'smooth',block:'start'});};
