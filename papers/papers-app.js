@@ -310,6 +310,8 @@ function renderPaper(tgt,src,url,sess,code){
    if(!r.ok)throw new Error('Gujarati source HTTP '+r.status);
    return r.text();
   }).then(function(markup){
+   // WordPress REST may JSON-wrap a string response; unwrap before parsing HTML.
+   try{var wrapped=JSON.parse(markup);if(typeof wrapped==='string')markup=wrapped;else if(wrapped&&typeof wrapped.html==='string')markup=wrapped.html;}catch(ignore){}
    var gd=new DOMParser().parseFromString(markup,'text/html');
    gd.querySelectorAll('script,base,style,iframe,object,embed').forEach(function(el){el.remove();});
    var gh=D.createElement('div');gh.innerHTML=gd.body.innerHTML;
