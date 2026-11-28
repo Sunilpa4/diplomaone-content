@@ -71,7 +71,7 @@ function renderSessions(code){
   var s=el.getAttribute('data-ps');var key=code+'/'+s;var pu=P[key];var pr=PR[b.k]||29;
   checkAccess(code,s).then(function(stt){
    if(stt==='owned'){el.innerHTML='<button class="btn" data-or="'+esc(s)+'">Read purchased paper</button>';var b2=el.querySelector('[data-or]');b2.onclick=function(){openReader(code,s,false);};}
-   else if(stt==='guest'){el.innerHTML='<a class="btn" href="/google-sign-in/">Sign in with Google</a>';}
+   else if(stt==='guest'){el.innerHTML='<a class="btn" href="/my-account/">Sign in with Google</a>';}
    else{el.innerHTML='<button class="btn buy" data-buy="'+esc(s)+'">Buy now · ₹'+pr+'</button>';var bb=el.querySelector('[data-buy]');bb.onclick=function(){startBuy(code,s);};}
   }).catch(function(){el.innerHTML='<button class="btn buy" data-buy2="'+esc(s)+'">Buy now · ₹'+pr+'</button>';var bb3=el.querySelector('[data-buy2]');bb3.onclick=function(){startBuy(code,s);};});
  });
@@ -155,7 +155,7 @@ function openReader(code,sess,free){
  }
  if(free){doFetch();return;}
  checkAccess(code,sess).then(function(stt){
-  if(stt==='guest'){tgt.innerHTML='<div class="err">Please <a href="/google-sign-in/">sign in</a> with the account used for purchase, then try again.</div>';return;}
+  if(stt==='guest'){tgt.innerHTML='<div class="err">Please <a href="/my-account/">sign in</a> with the account used for purchase, then try again.</div>';return;}
   if(stt!=='owned'){tgt.innerHTML='<div class="err">This paper is locked. <button class="btn buy" data-lockbuy style="margin-top:8px">Buy now · ₹'+(PR[st.b.k]||29)+'</button></div>';var lb=tgt.querySelector('[data-lockbuy]');lb.onclick=function(){startBuy(code,sess);};return;}
   doFetch();
  }).catch(function(e){tgt.innerHTML='<div class="err">'+esc(e.message||'Access check failed. Refresh and try again.')+'</div>';});
