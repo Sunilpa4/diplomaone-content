@@ -202,10 +202,10 @@ function renderPaper(tgt,src,url,sess,code){
  // Never machine-translate: papers without an authored Gujarati source remain English-only.
  var langBar=D.createElement('section');
  langBar.className='d1-language-switch';
- langBar.style.cssText='display:flex;position:relative;z-index:20;pointer-events:auto;isolation:isolate;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;margin:14px 0;border:1px solid #cbd5e1;border-radius:16px;background:linear-gradient(135deg,#f8fafc,#eef2ff);box-shadow:0 4px 14px rgba(15,23,42,.06);';
+ langBar.style.cssText='display:flex;position:relative;z-index:2147483000;pointer-events:auto;isolation:isolate;touch-action:manipulation;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;margin:14px 0;border:1px solid #cbd5e1;border-radius:16px;background:linear-gradient(135deg,#f8fafc,#eef2ff);box-shadow:0 4px 14px rgba(15,23,42,.06);';
  langBar.innerHTML='<div><strong style="display:block;font-size:14px;color:#172554">Choose content language</strong><small style="color:#64748b">મૂળ ગુજરાતી જવાબો ઉપલબ્ધ હોય ત્યાં</small></div><div role="group" aria-label="Reader language" style="display:flex;padding:4px;border-radius:12px;background:#e2e8f0;gap:4px"><button type="button" data-lang="en" aria-pressed="true" style="border:0;border-radius:9px;padding:10px 16px;font-weight:700;background:#fff;color:#1e293b;box-shadow:0 1px 4px #0002;cursor:pointer">English</button><button type="button" data-lang="gu" aria-pressed="false" style="border:0;border-radius:9px;padding:10px 16px;font-weight:700;background:transparent;color:#334155;cursor:pointer">ગુજરાતી</button></div><small id="d1-lang-status" role="status" aria-live="polite" style="flex-basis:100%;color:#64748b;font-size:12px"></small>';
  var rdHead=tgt.querySelector('.rd-h');
- if(rdHead)rdHead.insertAdjacentElement('afterend',langBar);else tgt.querySelector('.rd').insertBefore(langBar,tgt.querySelector('.rd-c'));
+ var readerToolbar=tgt.querySelector('.rd-t');if(readerToolbar)readerToolbar.insertAdjacentElement('afterend',langBar);else if(rdHead)rdHead.insertAdjacentElement('afterend',langBar);else tgt.querySelector('.rd').insertBefore(langBar,tgt.querySelector('.rd-c'));
  var languageSelect=langBar.querySelectorAll('button[data-lang]');
  languageSelect.forEach(function(btn){btn.style.cssText+=';position:relative;z-index:21;pointer-events:auto;touch-action:manipulation;';});
  var langStatus=langBar.querySelector('#d1-lang-status');
@@ -230,8 +230,8 @@ function renderPaper(tgt,src,url,sess,code){
   var guNodes=h.querySelectorAll('.gu,[lang="gu"],.gu-text,.qgu,.group-gu');
   var enNodes=h.querySelectorAll('.en,[lang="en"],.en-text');
   if(!guNodes.length)return false;
-  enNodes.forEach(function(el){el.style.display=gu?'none':'';});
-  guNodes.forEach(function(el){el.style.display=gu?'':'none';});
+  enNodes.forEach(function(el){el.hidden=gu;el.style.setProperty('display',gu?'none':'','important');});
+  guNodes.forEach(function(el){el.hidden=!gu;el.style.setProperty('display',gu?'':'none','important');});
   return true;
  }
  function loadSeparateGujarati(){
@@ -297,7 +297,7 @@ function renderPaper(tgt,src,url,sess,code){
  }
  // Default language is English. Original .gu/.en blocks are now correctly recognized.
  setPaperLanguage('en');
- langBar.addEventListener('click',function(ev){var btn=ev.target&&ev.target.closest?ev.target.closest('button[data-lang]'):null;if(!btn||!langBar.contains(btn))return;ev.preventDefault();ev.stopPropagation();setPaperLanguage(btn.getAttribute('data-lang'));},true);
+ languageSelect.forEach(function(btn){btn.onclick=function(ev){ev.preventDefault();ev.stopPropagation();if(ev.stopImmediatePropagation)ev.stopImmediatePropagation();setPaperLanguage(btn.getAttribute('data-lang'));return false;};btn.addEventListener('pointerup',function(ev){ev.preventDefault();setPaperLanguage(btn.getAttribute('data-lang'));},{passive:false});});
  tgt.querySelector('#bk').onclick=function(){tgt.innerHTML='';var v=vw();if(v)v.scrollIntoView({behavior:'smooth',block:'start'});};
  tgt.querySelector('#exp').onclick=function(){h.querySelectorAll('details.card,details.question-card').forEach(function(e){e.open=true;});};
  tgt.querySelector('#col').onclick=function(){h.querySelectorAll('details.card,details.question-card').forEach(function(e){e.open=false;});};
