@@ -159,7 +159,7 @@ var SKU_BASE={
 var FREE={'winter-2025':true}; /* winter-2025 = free sample, others = paid */
 var SESSION_LABEL={'winter-2025':'Winter 2025 (Free Sample)','summer-2025':'Summer 2025 (Free Sample)','summer-2026':'Summer 2026 (Paid ₹29)'};
 var B=BRANCHES,N=NAMES,S=SESSIONS,F=FREE,PID=SKU_BASE,SL=SESSION_LABEL;
-var COMMIT='d6becf7'; /* updated on deploy */
+var COMMIT='7ae0613'; /* updated on deploy */
 var GHI='https://cdn.jsdelivr.net/gh/Sunilpa4/diplomaone-content@'+COMMIT;
 var st={b:null,s:null,c:null};
 /* ===== Utility ===== */
