@@ -260,23 +260,23 @@ function renderPaper(tgt,src,url,sess,code){
  var langStatus=langBar.querySelector('#d1-lang-status');
  var paperKey=code+'/'+sess;
  var separateGujarati={
-  'DI01000081/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI01000081/summer-2026.bilingual.html',
-  'DI01000151/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI01000151/gujarati.html',
-  'DI01009011/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI01009011/summer-2026.gu.html',
-  'DI02000161/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI02000161/summer-2026.bilingual.html',
-  'DI02000171/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI02000171/summer-2026.bilingual.html',
-  'DI03000081/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000081/summer-2026.bilingual.html',
-  'DI03000091/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000091/summer-2026.bilingual.html',
-  'DI03000101/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000101/summer-2026.bilingual.html',
-  'DI03000161/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000161/previous-summer-2026.html',
-  'DI03000171/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000171/previous-summer-2026.html',
-  'DI03000201/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03000201/previous-summer-2026.html',
-  'DI03009011/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03009011/summer-2026.bilingual.html',
-  'DI03009021/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03009021/summer-2026.bilingual.html',
-  'DI03019011/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI03019011/previous-summer-2026.html',
-  'DI04000171/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI04000171/summer-2026.bilingual.html',
-  'DI04000321/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI04000321/summer-2026.bilingual.html',
-  'DI04009011/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI04009011/summer-2026.bilingual.html'
+  'DI01000081/summer-2026':true,
+  'DI01000151/summer-2026':true,
+  'DI01009011/summer-2026':true,
+  'DI02000161/summer-2026':true,
+  'DI02000171/summer-2026':true,
+  'DI03000081/summer-2026':true,
+  'DI03000091/summer-2026':true,
+  'DI03000101/summer-2026':true,
+  'DI03000161/summer-2026':true,
+  'DI03000171/summer-2026':true,
+  'DI03000201/summer-2026':true,
+  'DI03009011/summer-2026':true,
+  'DI03009021/summer-2026':true,
+  'DI03019011/summer-2026':true,
+  'DI04000171/summer-2026':true,
+  'DI04000321/summer-2026':true,
+  'DI04009011/summer-2026':true
  };
  var englishMarkup=h.innerHTML,gujaratiMarkup=null,gujaratiPromise=null;
  function updateLanguageButtons(lang){
@@ -300,9 +300,13 @@ function renderPaper(tgt,src,url,sess,code){
  function loadSeparateGujarati(){
   if(gujaratiMarkup)return Promise.resolve(gujaratiMarkup);
   if(gujaratiPromise)return gujaratiPromise;
-  var source=separateGujarati[paperKey];
-  if(!source)return Promise.resolve(null);
-  gujaratiPromise=fetch(source,{cache:'no-store'}).then(function(r){
+  if(!separateGujarati[paperKey])return Promise.resolve(null);
+  var cfg=window.DiplomaOneAccess||{};
+  var source=String(cfg.rest||'/wp-json/diplomaone/v1/')+'gujarati/'+encodeURIComponent(code)+'/'+encodeURIComponent(sess);
+  gujaratiPromise=refreshReaderNonce().then(function(nonce){
+   if(!nonce)throw new Error('Please sign in to load purchased Gujarati answers');
+   return fetch(source,{cache:'no-store',credentials:'same-origin',headers:{'X-WP-Nonce':nonce}});
+  }).then(function(r){
    if(!r.ok)throw new Error('Gujarati source HTTP '+r.status);
    return r.text();
   }).then(function(markup){
@@ -322,7 +326,7 @@ function renderPaper(tgt,src,url,sess,code){
    if(!gc.length)throw new Error('Gujarati source has no question cards');
    gh.querySelectorAll('img[src]').forEach(function(img){
     var path=img.getAttribute('src');
-    if(path&&!/^(https?:|data:|blob:|#)/i.test(path))img.src=new URL(path,source).href;
+    if(path&&!/^(https?:|data:|blob:|#)/i.test(path))img.src=GH+encodeURIComponent(code)+'/'+encodeURIComponent(sess)+'/'+path.split('/').map(encodeURIComponent).join('/');
    });
    gujaratiMarkup=gh.innerHTML;
    return gujaratiMarkup;
