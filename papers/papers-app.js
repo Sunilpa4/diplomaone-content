@@ -144,6 +144,21 @@ function openReader(code,sess,free){
  }).catch(function(e){tgt.innerHTML='<div class="err">'+esc(e.message||'Access check failed. Refresh and try again.')+'</div>';});
 }
 function renderPaper(tgt,src,url,sess){
+ // Paid REST responses can be returned as a JSON-wrapped HTML string by some
+ // WordPress/proxy layers. Normalize those formats before parsing every paper.
+ src=String(src==null?'':src).replace(/^\\uFEFF/,'').trim();
+ try{
+  var wrapped=JSON.parse(src);
+  if(typeof wrapped==='string')src=wrapped;
+  else if(wrapped&&typeof wrapped==='object'){
+   var candidate=wrapped.html||wrapped.body||wrapped.content||wrapped.data;
+   if(typeof candidate==='string')src=candidate;
+   else if(candidate&&typeof candidate==='object'&&typeof candidate.rendered==='string')src=candidate.rendered;
+  }
+ }catch(ignore){}
+ if(/&lt;\\/?(?:!doctype|html|head|body|details|summary|section|div)\\b/i.test(src)){
+  var decoder=D.createElement('textarea');decoder.innerHTML=src;src=decoder.value;
+ }
  var dp=new DOMParser();var doc=dp.parseFromString(src,'text/html');
  doc.querySelectorAll('script,base,style').forEach(function(e){e.remove();});
  var tEl=doc.querySelector('.hero h1,.paper-summary h3,h1');var title=tEl?tEl.textContent.trim():(doc.querySelector('title')?.textContent.trim()||'Solved paper');
@@ -154,6 +169,15 @@ function renderPaper(tgt,src,url,sess){
  var cards=h.querySelectorAll('details.card,details.question-card');
  if(!cards.length)cards=h.querySelectorAll('details');
  if(!cards.length)cards=h.querySelectorAll('[class~="question-card"]');
+ // Support older paper templates that use a card wrapper rather than <details>.
+ if(!cards.length)cards=h.querySelectorAll('.card');
+ if(!cards.length)cards=h.querySelectorAll('[class*="question"]');
+ if(!cards.length){
+  var summaries=h.querySelectorAll('summary');
+  if(summaries.length){
+   cards=Array.from(summaries).map(function(x){return x.closest('details')||x.parentElement;}).filter(Boolean);
+  }
+ }
  if(!cards.length){tgt.innerHTML='<div class="err">This paper source has no readable question cards. The source file needs repair; please try again later.</div>';return;}
  tgt.innerHTML='<div class="rd"><div class="rd-h"><div><div class="eyebrow">DIPLOMA ONE · ONLINE SOLUTION</div><h2>'+esc(title)+'</h2><p>'+esc(meta)+'</p></div><button class="btn" id="bk">← Back to papers</button></div><div class="rd-t"><span>'+cards.length+' question cards</span><div class="rd-b"><button class="btn" id="exp">Expand all</button><button class="btn" id="col">Collapse all</button></div></div><div class="rd-c"></div></div>';
  tgt.querySelector('.rd-c').appendChild(h);
