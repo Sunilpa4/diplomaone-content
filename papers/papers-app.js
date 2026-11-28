@@ -134,7 +134,7 @@ function openReader(code,sess,free){
   fetch(url,{cache:'no-store',credentials:'same-origin',headers:headers}).then(function(r){
    if(!r.ok)throw new Error('Paper file not available (HTTP '+r.status+').');
    return r.text();
-  }).then(function(src){renderPaper(tgt,src,url,sess);}).catch(function(e){tgt.innerHTML='<div class="err">'+esc(e.message||'Could not load paper.')+'</div>';});
+  }).then(function(src){renderPaper(tgt,src,url,sess,code);}).catch(function(e){tgt.innerHTML='<div class="err">'+esc(e.message||'Could not load paper.')+'</div>';});
  }
  if(free){doFetch();return;}
  checkAccess(code,sess).then(function(stt){
@@ -143,7 +143,7 @@ function openReader(code,sess,free){
   doFetch();
  }).catch(function(e){tgt.innerHTML='<div class="err">'+esc(e.message||'Access check failed. Refresh and try again.')+'</div>';});
 }
-function renderPaper(tgt,src,url,sess){
+function renderPaper(tgt,src,url,sess,code){
  // Paid REST responses can be returned as a JSON-wrapped HTML string by some
  // WordPress/proxy layers. Normalize those formats before parsing every paper.
  src=String(src==null?'':src).replace(/^\uFEFF/,'').trim();
