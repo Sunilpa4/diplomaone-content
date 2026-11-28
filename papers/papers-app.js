@@ -243,6 +243,7 @@ function renderPaper(tgt,src,url,sess){
   var gu=lang==='gu';
   if(!gu){
    h.innerHTML=englishMarkup;
+   setLanguageVisibility('en');
    updateLanguageButtons('en');
    langStatus.textContent='Showing English answers.';
    return;
