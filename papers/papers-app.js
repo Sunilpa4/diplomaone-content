@@ -181,8 +181,8 @@ function renderPaper(tgt,src,url,sess){
  if(!cards.length){tgt.innerHTML='<div class="err">This paper source has no readable question cards. The source file needs repair; please try again later.</div>';return;}
  tgt.innerHTML='<div class="rd"><div class="rd-h"><div><div class="eyebrow">DIPLOMA ONE · ONLINE SOLUTION</div><h2>'+esc(title)+'</h2><p>'+esc(meta)+'</p></div><button class="btn" id="bk">← Back to papers</button></div><div class="rd-t"><span>'+cards.length+' question cards</span><div class="rd-b"><button class="btn" id="exp">Expand all</button><button class="btn" id="col">Collapse all</button></div></div><div class="rd-c"></div></div>';
  tgt.querySelector('.rd-c').appendChild(h);
- // Switch between the reviewed English and Gujarati content already embedded in bilingual paper sources.
- // No machine translation is used. Hide the non-selected language and preserve diagrams/cards.
+ // Switch using the original Gujarati answer blocks or the separately stored Gujarati paper.
+ // Never machine-translate: papers without an authored Gujarati source remain English-only.
  var langBar=D.createElement('section');
  langBar.className='d1-language-switch';
  langBar.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;margin:14px 0;border:1px solid #cbd5e1;border-radius:16px;background:linear-gradient(135deg,#f8fafc,#eef2ff);box-shadow:0 4px 14px rgba(15,23,42,.06);';
@@ -191,21 +191,14 @@ function renderPaper(tgt,src,url,sess){
  if(rdHead)rdHead.insertAdjacentElement('afterend',langBar);else tgt.querySelector('.rd').insertBefore(langBar,tgt.querySelector('.rd-c'));
  var languageSelect=langBar.querySelectorAll('[data-lang]');
  var langStatus=langBar.querySelector('#d1-lang-status');
- function setPaperLanguage(lang){
-  var gu=lang==='gu';
-  var guNodes=h.querySelectorAll('[lang="gu"],.gu-text,.qgu,.group-gu');
-  var enNodes=h.querySelectorAll('[lang="en"],.en-text');
-  var guAvailable=guNodes.length>0;
-  if(gu && !guAvailable){
-   langStatus.textContent='આ પેપર માટે ગુજરાતી જવાબો આ આવૃત્તિમાં ઉપલબ્ધ નથી. English આવૃત્તિ બતાવવામાં આવી છે.';
-   return;
-  }
-  enNodes.forEach(function(el){el.style.display=gu?'none':'';});
-  guNodes.forEach(function(el){el.style.display=gu?'':'none';});
-  // Standalone Gujarati source files identify themselves with <html lang="gu">.
-  if(gu && h.getAttribute('lang')==='gu'){
-   h.querySelectorAll('[lang="gu"]').forEach(function(el){el.style.display='';});
-  }
+ var paperKey=code+'/'+sess;
+ var separateGujarati={
+  'DI01000081/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI01000081/summer-2026.gu.html',
+  'DI01000151/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI01000151/gujarati.html',
+  'DI01009011/summer-2026':'https://raw.githubusercontent.com/Sunilpa4/diplomaone-app/main/papers-upload/originals/DI01009011/summer-2026.gu.html'
+ };
+ var englishMarkup=h.innerHTML,gujaratiMarkup=null,gujaratiPromise=null;
+ function updateLanguageButtons(lang){
   languageSelect.forEach(function(btn){
    var active=btn.getAttribute('data-lang')===lang;
    btn.setAttribute('aria-pressed',active?'true':'false');
@@ -213,9 +206,77 @@ function renderPaper(tgt,src,url,sess){
    btn.style.color=active?'#1e293b':'#334155';
    btn.style.boxShadow=active?'0 1px 4px #0002':'none';
   });
-  langStatus.textContent=gu?'ગુજરાતી મૂળ જવાબો બતાવી રહ્યા છીએ.':'Showing English answers.';
  }
- // Default to English; hide embedded Gujarati answer blocks until selected.
+ function setLanguageVisibility(lang){
+  var gu=lang==='gu';
+  var guNodes=h.querySelectorAll('.gu,[lang="gu"],.gu-text,.qgu,.group-gu');
+  var enNodes=h.querySelectorAll('.en,[lang="en"],.en-text');
+  if(!guNodes.length)return false;
+  enNodes.forEach(function(el){el.style.display=gu?'none':'';});
+  guNodes.forEach(function(el){el.style.display=gu?'':'none';});
+  return true;
+ }
+ function loadSeparateGujarati(){
+  if(gujaratiMarkup)return Promise.resolve(gujaratiMarkup);
+  if(gujaratiPromise)return gujaratiPromise;
+  var source=separateGujarati[paperKey];
+  if(!source)return Promise.resolve(null);
+  gujaratiPromise=fetch(source,{cache:'no-store'}).then(function(r){
+   if(!r.ok)throw new Error('Gujarati source HTTP '+r.status);
+   return r.text();
+  }).then(function(markup){
+   var gd=new DOMParser().parseFromString(markup,'text/html');
+   gd.querySelectorAll('script,base,style,iframe,object,embed').forEach(function(el){el.remove();});
+   var gh=D.createElement('div');gh.innerHTML=gd.body.innerHTML;
+   var gc=gh.querySelectorAll('details');
+   if(!gc.length)throw new Error('Gujarati source has no question cards');
+   gh.querySelectorAll('img[src]').forEach(function(img){
+    var path=img.getAttribute('src');
+    if(path&&!/^(https?:|data:|blob:|#)/i.test(path))img.src=new URL(path,source).href;
+   });
+   gujaratiMarkup=gh.innerHTML;
+   return gujaratiMarkup;
+  }).catch(function(err){gujaratiPromise=null;throw err;});
+  return gujaratiPromise;
+ }
+ function setPaperLanguage(lang){
+  var gu=lang==='gu';
+  if(!gu){
+   h.innerHTML=englishMarkup;
+   updateLanguageButtons('en');
+   langStatus.textContent='Showing English answers.';
+   return;
+  }
+  // First use original Gujarati text already embedded alongside English answers.
+  h.innerHTML=englishMarkup;
+  if(setLanguageVisibility('gu')){
+   updateLanguageButtons('gu');
+   langStatus.textContent='ગુજરાતી મૂળ જવાબો બતાવી રહ્યા છીએ.';
+   return;
+  }
+  // Otherwise load the paper's separate Gujarati source, where one exists.
+  var separateUrl=separateGujarati[paperKey];
+  if(!separateUrl){
+   updateLanguageButtons('en');
+   langStatus.textContent='આ પેપર માટે મૂળ ગુજરાતી જવાબો ઉપલબ્ધ નથી. English આવૃત્તિ બતાવવામાં આવી છે.';
+   return;
+  }
+  updateLanguageButtons('gu');
+  langStatus.textContent='ગુજરાતી જવાબો લોડ થઈ રહ્યા છે…';
+  loadSeparateGujarati().then(function(markup){
+   if(!markup)throw new Error('Gujarati source is unavailable');
+   h.innerHTML=markup;
+   var count=h.querySelectorAll('details').length;
+   var countLabel=tgt.querySelector('.rd-t>span');
+   if(countLabel)countLabel.textContent=count+' question cards';
+   langStatus.textContent='ગુજરાતી મૂળ જવાબો બતાવી રહ્યા છીએ.';
+  }).catch(function(){
+   h.innerHTML=englishMarkup;
+   updateLanguageButtons('en');
+   langStatus.textContent='ગુજરાતી ફાઇલ લોડ થઈ શકી નથી. English આવૃત્તિ બતાવવામાં આવી છે.';
+  });
+ }
+ // Default language is English. Original .gu/.en blocks are now correctly recognized.
  setPaperLanguage('en');
  languageSelect.forEach(function(btn){btn.addEventListener('click',function(){setPaperLanguage(btn.getAttribute('data-lang'));});});
  tgt.querySelector('#bk').onclick=function(){tgt.innerHTML='';var v=vw();if(v)v.scrollIntoView({behavior:'smooth',block:'start'});};
